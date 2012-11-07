@@ -1,17 +1,40 @@
 var express = require('express'),
-  app = express.createServer(express.logger()),
-  io = require('socket.io').listen(app),
+  http = require('http'),
+  app = express(),
+  server = http.createServer(app),
+  io = require('socket.io').listen(server),
+  stylus = require('stylus'),
+  nib = require('nib'),
   routes = require('./routes');
 
 // Configuration
+function compileCss(str, path) {
+  return stylus(str)
+    .set('filename', path)
+    .use(nib())
+}
 
 app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  app.use(express.favicon())
+  app.use(express.logger("dev"))
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
+  app.use(stylus.middleware(
+    { src: __dirname + '/public'
+      , compile: compileCss
+    }
+  ))
   app.use(express.static(__dirname + '/public'));
+  app.use(function(req, res, next){
+    throw new Error(req.url + ' not found');
+  });
+  app.use(function(err, req, res, next) {
+    console.log(err);
+    res.send(err.message);
+  });
 });
 
 app.configure('development', function() {
@@ -33,27 +56,10 @@ io.configure(function () {
 // Routes
 
 var port = process.env.PORT || 5000; // Use the port that Heroku provides or default to 5000
-app.listen(port, function() {
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-});
+server.listen(port);
 
-app.get('/', function(req, res){
-  res.render('index', {
-    title: 'Home'
-  });
-});
-
-app.get('/about', function(req, res){
-  res.render('about', {
-    title: 'About'
-  });
-});
-
-app.get('/contact', function(req, res){
-  res.render('contact', {
-    title: 'Contact'
-  });
-});
+var router = require("./router.js");
+router.createRoutes(app, routes)
 
 var status = "All is well.";
 

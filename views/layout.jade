@@ -3,7 +3,7 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/stylesheets/chunkfive-fontface.css')
+    script(type='text/javascript', src='/js/libs/jquery-1.8.2.min.js')
   body
     header
       nav
@@ -14,15 +14,21 @@ html
             a(href="/about") About
           li
             a(href="/contact") Contact
-    section#wrapper!= body
-        footer
-          section.css-table
-            section.four-column
-              section.cell
-                p Mauris porttitor <br />felis eu leo aliquet<br /> ac rutrum odio aliquet
-              section.cell
-                p Mauris porttitor <br />felis eu leo aliquet<br /> ac rutrum odio aliquet
-              section.cell
-                p Mauris porttitor <br />felis eu leo aliquet<br /> ac rutrum odio aliquet
-              section.cell
-                p Mauris porttitor <br />felis eu leo aliquet<br /> ac rutrum odio aliquet
+    section#wrapper
+      div.body
+        block body
+            "this is body"
+      div.sidebar
+        block sidebar
+            "this is sidebar"
+    footer
+      section.css-table
+        section.four-column
+          section.cell
+            p 1
+          section.cell
+            p 2
+          section.cell
+            p 3
+          section.cell
+            p 4
