@@ -1,9 +1,8 @@
 var mongoose = require('mongoose');
-var db = mongoose.createConnection('localhost', 'posts')
+var db = mongoose.createConnection('localhost', 'middleman')
 var PostSchema = new mongoose.Schema({
-  id : {type: String, require: true, trim: true, unique: true},
   name : {type: String, required: true, trim: true},
-  desc : String,
+  description : String,
   price : Number
 });
 

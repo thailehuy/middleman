@@ -1,0 +1,15 @@
+extends ../layout
+
+block body
+    h1 Post details
+    div
+        label Post form
+        p
+            label(for='post_name') Name
+        p= post.name
+        p
+            label(for='post_description') Description
+        p= post.description
+        p
+            label(for='post_price') Price
+        p= post.price

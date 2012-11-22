@@ -3,3 +3,11 @@ extends ../layout
 block body
     h1 Posts
     p Welcome to Posts
+    ul
+        for post in posts
+            li
+                div.post
+                    div.name
+                        a(href='/posts/#{post._id}')= post.name
+                    div.description= post.description
+                    div.price= post.price

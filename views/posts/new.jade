@@ -1,0 +1,17 @@
+extends ../layout
+
+block body
+    h1 New Posts
+    div
+        form(action='/posts', method='POST')
+            label Post form
+            p
+                label(for='post_name') Name
+                input(type='text', name='name', id='post_title')
+            p
+                label(for='post_description') Description
+                input(type='text', name='description', id='post_description')
+            p
+                label(for='post_price') Price
+                input(type='text', name='price', id='post_price')
+            input(type='submit', value='Submit')
